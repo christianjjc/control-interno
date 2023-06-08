@@ -1,13 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
 import Container from "./components/Container/Container";
 import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 import Footer from "./components/Footer/Footer";
 import SectionOne from "./components/SectionOne/SectionOne";
 import Login from "./components/Login/Login";
+import MainMenu from "./components/MainMenu/MainMenu";
+import Forbbiden from "./components/Forbbiden/Forbbiden";
 
 const App = () => {
+  let isAdmin = true;
   return (
     <>
       <Container>
@@ -16,6 +18,12 @@ const App = () => {
           <SectionOne>
             <Routes>
               <Route path="/" element={<Login />} />
+
+              {isAdmin ? (
+                <Route path="/main-menu" element={<MainMenu />} />
+              ) : (
+                <Route path="/main-menu" element={<Forbbiden />} />
+              )}
             </Routes>
           </SectionOne>
         </Main>
