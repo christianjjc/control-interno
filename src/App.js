@@ -9,23 +9,23 @@ import MainMenu from "./components/MainMenu/MainMenu";
 import Forbbiden from "./components/Forbbiden/Forbbiden";
 
 const App = () => {
-  return (
-    <>
-      <Container>
-        <Header>Header</Header>
-        <Main>
-          <SectionOne>
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/main-menu" element={<MainMenu />} />
-              <Route path="/forbbiden" element={<Forbbiden />} />
-            </Routes>
-          </SectionOne>
-        </Main>
-        <Footer>Footer</Footer>
-      </Container>
-    </>
-  );
+    return (
+        <>
+            <Container>
+                <Header>Header</Header>
+                <Main>
+                    <SectionOne>
+                        <Routes>
+                            <Route path="/" element={<Login />} />
+                            <Route path="/main-menu" element={<MainMenu />} />
+                            <Route path="/forbbiden" element={<Forbbiden />} />
+                        </Routes>
+                    </SectionOne>
+                </Main>
+                <Footer>Footer</Footer>
+            </Container>
+        </>
+    );
 };
 
 export default App;
