@@ -9,7 +9,6 @@ import MainMenu from "./components/MainMenu/MainMenu";
 import Forbbiden from "./components/Forbbiden/Forbbiden";
 
 const App = () => {
-  let isAdmin = true;
   return (
     <>
       <Container>
@@ -18,12 +17,8 @@ const App = () => {
           <SectionOne>
             <Routes>
               <Route path="/" element={<Login />} />
-
-              {isAdmin ? (
-                <Route path="/main-menu" element={<MainMenu />} />
-              ) : (
-                <Route path="/main-menu" element={<Forbbiden />} />
-              )}
+              <Route path="/main-menu" element={<MainMenu />} />
+              <Route path="/forbbiden" element={<Forbbiden />} />
             </Routes>
           </SectionOne>
         </Main>

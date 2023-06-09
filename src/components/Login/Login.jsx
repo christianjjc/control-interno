@@ -1,46 +1,77 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [usuario, setUsuario] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleLogin = async () => {
+    let data = JSON.stringify({
+      nombre_usuario: document.getElementById("txtUserName").value,
+      pass_usuario: document.getElementById("txtPassword").value,
+    });
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://localhost:8080/",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+    await axios
+      .request(config)
+      .then((response) => {
+        setUsuario(response.data);
+        //setUsuario(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (usuario.length > 0) {
+      setLoggedIn(true);
+    }
+  }, [usuario]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/main-menu");
+    }
+  }, [loggedIn]);
+
   return (
     <>
       <div>
         <div className="row justify-content-center">
           <div className="col-md-6">
             <h3 className="text-center mb-4">Ingreso al Sistema</h3>
-            <form>
-              <div className="mb-3">
-                <label htmlFor="txtUserName" className="form-label">
-                  Nombre de usuario:
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="txtUserName"
-                  placeholder="Ingrese su nombre de usuario"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="txtPassword" className="form-label">
-                  Contraseña:
-                </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="txtPassword"
-                  placeholder="Ingrese su contraseña"
-                />
-              </div>
-              <div className="text-center mb-3">
-                <a href="#" className="text-decoration-none">
-                  ¿Olvidaste la contraseña?
-                </a>
-              </div>
-              <div className="text-center">
-                <button type="submit" className="btn btn-primary">
-                  Ingresar
-                </button>
-              </div>
-            </form>
+            <div className="mb-3">
+              <label htmlFor="txtUserName" className="form-label">
+                Nombre de usuario:
+              </label>
+              <input type="text" className="form-control" id="txtUserName" placeholder="Ingrese su nombre de usuario" />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="txtPassword" className="form-label">
+                Contraseña:
+              </label>
+              <input type="password" className="form-control" id="txtPassword" placeholder="Ingrese su contraseña" />
+            </div>
+            <div className="text-center mb-3">
+              <a href="#" className="text-decoration-none">
+                ¿Olvidaste la contraseña?
+              </a>
+            </div>
+            <div className="text-center">
+              <button type="button" className="btn btn-primary" onClick={handleLogin}>
+                Ingresar
+              </button>
+            </div>
           </div>
         </div>
       </div>
