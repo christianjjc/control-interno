@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
+  let mensajeError = "";
 
   const handleLogin = async () => {
     let data = JSON.stringify({
@@ -32,17 +32,15 @@ const Login = () => {
       });
   };
 
-  useEffect(() => {
-    if (usuario.length > 0) {
-      setLoggedIn(true);
-    }
-  }, [usuario]);
+  const obtenerDatos = () => {};
 
   useEffect(() => {
-    if (loggedIn) {
+    if (usuario.length > 0) {
       navigate("/main-menu");
+    } else {
+      console.log("no encontrado");
     }
-  }, [loggedIn]);
+  }, [navigate, usuario]);
 
   return (
     <>
@@ -72,6 +70,7 @@ const Login = () => {
                 Ingresar
               </button>
             </div>
+            <div className="text-center">{mensajeError}</div>
           </div>
         </div>
       </div>
