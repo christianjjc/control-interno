@@ -12,7 +12,7 @@ const Login = () => {
                 nombre_usuario: document.getElementById("txtUserName").value,
                 pass_usuario: document.getElementById("txtPassword").value,
             });
-            const result = await UtilidadesCj.obtenerDatos("http://localhost:8080/", "post", data);
+            const result = await UtilidadesCj.obtenerDatosAxios("http://localhost:8080/", "post", data);
             if (result.length > 0) {
                 setUsuario(result);
             } else {
