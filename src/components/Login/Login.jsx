@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UtilidadesCj from "../../utils/utilitarios.js";
+import UserContext from "../../context/user-context.js";
 
 const Login = () => {
     const navigate = useNavigate();
     const [usuario, setUsuario] = useState([]);
+    const usrCtx = useContext(UserContext);
 
     const handleLogin = async () => {
         try {
@@ -15,6 +17,7 @@ const Login = () => {
             const result = await UtilidadesCj.obtenerDatosAxios("http://localhost:8080/", "post", data);
             if (result.length > 0) {
                 setUsuario(result);
+                usrCtx.setUsuario(result);
             } else {
                 document.getElementById("txtMensajeError").classList.remove("d-none");
                 ocultaMensaje();
@@ -34,7 +37,7 @@ const Login = () => {
         if (usuario.length > 0) {
             navigate("/main-menu");
         }
-    }, [navigate, usuario]);
+    }, [navigate, usuario, UserContext]);
 
     return (
         <>
