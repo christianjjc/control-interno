@@ -14,7 +14,7 @@ const SectionOne = ({ children }) => {
 
     return (
         <>
-            <section>{children}</section>
+            <section id="sectionOne">{children}</section>
         </>
     );
 };

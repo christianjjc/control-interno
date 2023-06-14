@@ -1,23 +1,30 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../../context/user-context";
 
 const VMainMenu = () => {
     const usrCtx = useContext(UserContext);
     const [usuario, setUsuario] = useState([]);
+    const navigate = useNavigate();
 
     const cargaMenuVertical = () => {
-        setUsuario(usrCtx.usuario[0]);
-        switch (usuario.level) {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                document.getElementById("VMenuMaestros").remove();
-                break;
-            default:
-                break;
+        try {
+            setUsuario(usrCtx.usuario[0]);
+            switch (usuario.level) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    document.getElementById("VMenuMaestros").remove();
+                    break;
+                default:
+                    break;
+            }
+        } catch (error) {
+            navigate("/");
+            //throw new Error("Error Nuevo", error);
+            console.error("error VMainMenu:", error);
         }
     };
 

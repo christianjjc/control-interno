@@ -8,7 +8,7 @@ import Login from "./components/Login/Login";
 import MainPage from "./components/MainPage/MainPage";
 import Forbbiden from "./components/Forbbiden/Forbbiden";
 import Master from "./components/Master/Master";
-import Proveedores from "./components/Proveedores/Proveedores";
+import ProveedoresList from "./components/ProveedoresList/ProveedoresList";
 
 const App = () => {
     return (
@@ -22,7 +22,7 @@ const App = () => {
                             <Route path="/main-page" element={<MainPage />} />
                             <Route path="/forbbiden" element={<Forbbiden />} />
                             <Route path="/main-page/master" element={<MainPage children={<Master />} />} />
-                            <Route path="/main-page/master/proveedores" element={<MainPage children={<Proveedores />} />} />
+                            <Route path="/main-page/master/proveedores" element={<MainPage children={<ProveedoresList />} />} />
                         </Routes>
                     </SectionOne>
                 </Main>

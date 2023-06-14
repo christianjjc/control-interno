@@ -1,8 +1,7 @@
-//import moment from "moment";
 import axios from "axios";
 
 class UtilidadesCj {
-    static obtenerDatosAxios = async (ruta, vervo, array) => {
+    static obtenerDatosAxios = async (ruta, vervo, array = []) => {
         let config = {
             method: vervo,
             maxBodyLength: Infinity,
