@@ -14,11 +14,11 @@ class UtilidadesCj {
         };
         try {
             const response = await axios.request(config);
-            console.log(response.data);
+            //console.log(response.data);
             return response.data;
         } catch (error) {
-            console.log(error);
-            throw error;
+            //console.log(error);
+            throw new Error("Error:" + error);
         }
     };
 }

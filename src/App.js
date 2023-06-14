@@ -5,8 +5,10 @@ import Main from "./components/Main/Main";
 import Footer from "./components/Footer/Footer";
 import SectionOne from "./components/SectionOne/SectionOne";
 import Login from "./components/Login/Login";
-import MainMenu from "./components/MainMenu/MainMenu";
+import MainPage from "./components/MainPage/MainPage";
 import Forbbiden from "./components/Forbbiden/Forbbiden";
+import Master from "./components/Master/Master";
+import Proveedores from "./components/Proveedores/Proveedores";
 
 const App = () => {
     return (
@@ -17,8 +19,10 @@ const App = () => {
                     <SectionOne>
                         <Routes>
                             <Route path="/" element={<Login />} />
-                            <Route path="/main-menu" element={<MainMenu />} />
+                            <Route path="/main-page" element={<MainPage />} />
                             <Route path="/forbbiden" element={<Forbbiden />} />
+                            <Route path="/main-page/master" element={<MainPage children={<Master />} />} />
+                            <Route path="/main-page/master/proveedores" element={<MainPage children={<Proveedores />} />} />
                         </Routes>
                     </SectionOne>
                 </Main>
