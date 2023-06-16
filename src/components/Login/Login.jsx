@@ -9,10 +9,15 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            let data = JSON.stringify({
+            /*             let data = JSON.stringify({
                 nombre_usuario: document.getElementById("txtUserName").value,
                 pass_usuario: document.getElementById("txtPassword").value,
-            });
+            }); */
+            let data = {
+                nombre_usuario: document.getElementById("txtUserName").value,
+                pass_usuario: document.getElementById("txtPassword").value,
+            };
+
             const result = await UtilidadesCj.obtenerDatosAxios("http://localhost:8080/", "post", data);
             if (result.length > 0) {
                 usrCtx.setUsuario(result);

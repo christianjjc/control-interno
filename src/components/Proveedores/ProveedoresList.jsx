@@ -13,7 +13,6 @@ const ProveedoresList = () => {
         try {
             const proveedores = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, "get");
             setListaProveedores(proveedores);
-            console.log(proveedores);
         } catch (error) {
             console.error(error);
         }
@@ -25,7 +24,7 @@ const ProveedoresList = () => {
 
     return (
         <>
-            <section id="mmtoProveedores">
+            <section id="listaProveedores">
                 <div className="row">
                     <div className="col">
                         <h2>Listado de Proveedores</h2>
@@ -54,12 +53,12 @@ const ProveedoresList = () => {
                                         <td>{item.direccion}</td>
                                         <td>{item.telefono}</td>
                                         <td>
-                                            <Link id={`mp-${item.id_proveedor}`} to="#">
+                                            <Link id={`btnmp-${item.id_proveedor}`} to={`/main-page/master/proveedores-mant/${item.id_proveedor}`} className="btn btn-outline-warning">
                                                 <img src={imgModify} className="img-mant" alt="Modificar Proveedor" />
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link id={`dp-${item.id_proveedor}`} to="#">
+                                            <Link id={`dp-${item.id_proveedor}`} to="#" className="btn btn-outline-danger">
                                                 <img src={imgTrash} className="img-mant" alt="Eliminar Proveedor" />
                                             </Link>
                                         </td>

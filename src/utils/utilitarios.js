@@ -1,23 +1,22 @@
 import axios from "axios";
 
 class UtilidadesCj {
-    static obtenerDatosAxios = async (ruta, vervo, array = []) => {
-        let config = {
+    static obtenerDatosAxios = async (ruta, vervo, array = "") => {
+        const data = JSON.stringify(array);
+        const config = {
             method: vervo,
             maxBodyLength: Infinity,
             url: ruta,
             headers: {
                 "Content-Type": "application/json",
             },
-            data: array,
+            data: data,
         };
         try {
             const response = await axios.request(config);
-            //console.log(response.data);
             return response.data;
         } catch (error) {
-            //console.log(error);
-            throw new Error("Error:" + error);
+            throw new Error("Error obtenerDatosAxios:" + error);
         }
     };
 }
