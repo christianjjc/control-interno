@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UtilidadesCj from "../../utils/utilitarios.js";
 import UserContext from "../../context/user-context.js";
 
@@ -9,10 +9,6 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            /*             let data = JSON.stringify({
-                nombre_usuario: document.getElementById("txtUserName").value,
-                pass_usuario: document.getElementById("txtPassword").value,
-            }); */
             let data = {
                 nombre_usuario: document.getElementById("txtUserName").value,
                 pass_usuario: document.getElementById("txtPassword").value,
@@ -60,9 +56,7 @@ const Login = () => {
                         <input type="password" className="form-control" id="txtPassword" placeholder="Ingrese su contraseña" />
                     </div>
                     <div className="text-center mb-3">
-                        <a href="#" className="text-decoration-none">
-                            ¿Olvidaste la contraseña?
-                        </a>
+                        <Link className="text-decoration-none">¿Olvidaste la contraseña?</Link>
                     </div>
                     <div className="text-center">
                         <button type="button" className="btn btn-primary" onClick={handleLogin}>

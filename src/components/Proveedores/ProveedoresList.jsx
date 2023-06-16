@@ -53,7 +53,10 @@ const ProveedoresList = () => {
                                         <td>{item.direccion}</td>
                                         <td>{item.telefono}</td>
                                         <td>
-                                            <Link id={`btnmp-${item.id_proveedor}`} to={`/main-page/master/proveedores-mant/${item.id_proveedor}`} className="btn btn-outline-warning">
+                                            <Link
+                                                id={`btnmp-${item.id_proveedor}`}
+                                                to={`/main-page/master/proveedores/${item.id_proveedor}`}
+                                                className="btn btn-outline-warning">
                                                 <img src={imgModify} className="img-mant" alt="Modificar Proveedor" />
                                             </Link>
                                         </td>
@@ -66,6 +69,17 @@ const ProveedoresList = () => {
                                 ))}
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 d-flex flex-wrap justify-content-center">
+                        <Link className="btn btn-secondary me-1 mb-2" to={`/main-page/master/proveedores/new`}>
+                            Nuevo
+                        </Link>
+                        <Link className="btn btn-secondary mx-1 mb-2">Imprimir</Link>
+                        <Link className="btn btn-warning ms-1 mb-2" to="/main-page/master/">
+                            Volver
+                        </Link>
                     </div>
                 </div>
             </section>

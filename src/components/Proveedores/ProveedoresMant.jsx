@@ -9,8 +9,12 @@ const ProveedoresMant = () => {
 
     const getProveedor = async () => {
         try {
-            const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDOR + id, "get");
-            setProveedor(result);
+            if (id === "new") {
+                setProveedor([""]);
+            } else {
+                const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDOR + id, "get");
+                setProveedor(result);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -29,77 +33,78 @@ const ProveedoresMant = () => {
             </div>
 
             {proveedor.map((item, index) => (
-                <div className="row px-4" key={`prov-mant-${item.id_proveedor}-${index}`}>
+                <div className="row px-4" key={`prov-mant-${item?.id_proveedor}-${index}`}>
                     <div className="row d-flex flex-sm-wrap my-3">
                         <div className="col-12 col-md-4 fw-bold">
-                            <label for="txtrazonsocial" class="form-label">
+                            <label htmlFor="txtrazonsocial" className="form-label">
                                 Razón Social:
                             </label>
                         </div>
                         <div className="col-12 col-md-8">
                             <input
                                 id="txtrazonsocial"
-                                class="form-control"
+                                className="form-control"
                                 type="text"
                                 placeholder="Razón Social"
                                 aria-label="txtrazonsocial"
-                                defaultValue={item.razon_social}
+                                defaultValue={item?.razon_social}
                             />
                         </div>
                     </div>
                     <div className="row d-flex flex-sm-wrap mb-3">
                         <div className="col-12 col-md-4 fw-bold">
-                            <label for="txtruc" class="form-label">
+                            <label htmlFor="txtruc" className="form-label">
                                 RUC:
                             </label>
                         </div>
                         <div className="col-12 col-md-8">
                             <input
                                 id="txtruc"
-                                class="form-control"
+                                className="form-control"
                                 type="text"
                                 placeholder="Número de Ruc"
                                 aria-label="txtruc"
-                                defaultValue={item.ruc}
+                                defaultValue={item?.ruc}
                             />
                         </div>
                     </div>
                     <div className="row d-flex flex-sm-wrap mb-3">
                         <div className="col-12 col-md-4 fw-bold">
-                            <label for="txtdireccion" class="form-label">
+                            <label htmlFor="txtdireccion" className="form-label">
                                 Dirección:
                             </label>
                         </div>
                         <div className="col-12 col-md-8">
                             <input
                                 id="txtdireccion"
-                                class="form-control"
+                                className="form-control"
                                 type="text"
                                 placeholder="Dirección"
                                 aria-label="txtdireccion"
-                                defaultValue={item.direccion}
+                                defaultValue={item?.direccion}
                             />
                         </div>
                     </div>
                     <div className="row d-flex flex-sm-wrap mb-3">
                         <div className="col-12 col-md-4 fw-bold">
-                            <label for="txttelefono" class="form-label">
+                            <label htmlFor="txttelefono" className="form-label">
                                 Teléfono:
                             </label>
                         </div>
                         <div className="col-12 col-md-8">
                             <input
                                 id="txttelefono"
-                                class="form-control"
+                                className="form-control"
                                 type="text"
                                 placeholder="Dirección"
                                 aria-label="txttelefono"
-                                defaultValue={item.telefono}
+                                defaultValue={item?.telefono}
                             />
                         </div>
                     </div>
                 </div>
             ))}
+
             <div className="row">
                 <div className="col-12 d-flex flex-wrap justify-content-center">
                     <Link className="btn btn-secondary me-1 mb-2">Guardar</Link>
@@ -113,7 +118,5 @@ const ProveedoresMant = () => {
         </section>
     );
 };
-
-//<li key={item.id_proveedor}>{item.ruc}</li>
 
 export default ProveedoresMant;
