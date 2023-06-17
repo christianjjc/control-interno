@@ -19,6 +19,9 @@ class UtilidadesCj {
             throw new Error("Error obtenerDatosAxios:" + error);
         }
     };
+
+    //static comodin = encodeURIComponent("%");
+    static comodin = "%";
 }
 
 export default UtilidadesCj;

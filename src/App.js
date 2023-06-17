@@ -23,8 +23,8 @@ const App = () => {
                             <Route path="/main-page" element={<MainPage />} />
                             <Route path="/forbbiden" element={<Forbbiden />} />
                             <Route path="/main-page/master" element={<MainPage children={<Master />} />} />
-                            <Route path="/main-page/master/proveedores" element={<MainPage children={<ProveedoresList />} />} />
-                            <Route path="/main-page/master/proveedores-mant/:id" element={<MainPage children={<ProveedoresMant />} />} />
+                            <Route path="/main-page/master/proveedores/" element={<MainPage children={<ProveedoresList />} />} />
+                            <Route path="/main-page/master/proveedores/:id" element={<MainPage children={<ProveedoresMant />} />} />
                         </Routes>
                     </SectionOne>
                 </Main>
