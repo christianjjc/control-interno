@@ -20,7 +20,8 @@ class UtilidadesCj {
         }
     };
 
-    static comodin = encodeURIComponent("%");
+    //static comodin = encodeURIComponent("%");
+    static comodin = "%";
 }
 
 export default UtilidadesCj;

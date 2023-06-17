@@ -40,7 +40,7 @@ const VMainMenu = () => {
                     Maestros
                     <ul>
                         <li>
-                            <Link className="VMenuLink" to={`/main-page/master/proveedores/all/${UtilidadesCj.comodin}`}>
+                            <Link className="VMenuLink" to={"/main-page/master/proveedores/"}>
                                 Proveedores
                             </Link>
                         </li>

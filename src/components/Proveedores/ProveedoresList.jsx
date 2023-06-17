@@ -12,7 +12,7 @@ const ProveedoresList = () => {
 
     const handleBuscaProveedor = () => {
         const valorBuscado = document.getElementById("txtbuscarproveedor").value;
-        alert("Buscando... " + valorBuscado);
+        getProveedores(valorBuscado);
     };
 
     const handleEliminarProveedor = (id, rs, event) => {
@@ -36,9 +36,11 @@ const ProveedoresList = () => {
         }
     };
 
-    const getProveedores = async () => {
+    const getProveedores = async (valor) => {
         try {
-            const proveedores = await UtilidadesCj.obtenerDatosAxios(`http://localhost:8080/proveedores/all/${UtilidadesCj.comodin}`, "get");
+            const proveedores = await UtilidadesCj.obtenerDatosAxios("http://localhost:8080/proveedores/all/", "POST", {
+                valor: valor,
+            });
             setListaProveedores(proveedores);
         } catch (error) {
             console.error(error);
@@ -46,8 +48,7 @@ const ProveedoresList = () => {
     };
 
     useEffect(() => {
-        // eslint-disable-next-line
-        getProveedores();
+        handleBuscaProveedor();
     }, [provEliminado]);
 
     return (
