@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../../context/user-context";
+import UtilidadesCj from "../../utils/utilitarios";
 
 const VMainMenu = () => {
     const usrCtx = useContext(UserContext);
@@ -39,7 +40,7 @@ const VMainMenu = () => {
                     Maestros
                     <ul>
                         <li>
-                            <Link className="VMenuLink" to="/main-page/master/proveedores">
+                            <Link className="VMenuLink" to={`/main-page/master/proveedores/all/${UtilidadesCj.comodin}`}>
                                 Proveedores
                             </Link>
                         </li>

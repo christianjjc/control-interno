@@ -38,7 +38,7 @@ const ProveedoresList = () => {
 
     const getProveedores = async () => {
         try {
-            const proveedores = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, "get");
+            const proveedores = await UtilidadesCj.obtenerDatosAxios(`http://localhost:8080/proveedores/all/${UtilidadesCj.comodin}`, "get");
             setListaProveedores(proveedores);
         } catch (error) {
             console.error(error);
