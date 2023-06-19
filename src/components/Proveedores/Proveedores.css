@@ -4,5 +4,26 @@
 }
 
 .contenedor-seccion {
-    height: 900px;
+    /* height: 900px; */
+    background-color: white;
+}
+
+/* .cabecera-form {
+    height: 140px;
+} */
+
+/* .body-form {
+    height: 650px;
+} */
+
+.fila_listado {
+    /* height: 60px; */
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #d2d2d2;
+}
+
+.footer-form {
+    height: 100px;
 }
