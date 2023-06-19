@@ -11,47 +11,36 @@ const ProveedoresMant = () => {
 
     const handleSaveProveedor = async () => {
         let verbo = "";
-        let proveedorGuardar = [];
         const ruc = document.getElementById("txtruc").value;
         const razon_social = document.getElementById("txtrazonsocial").value;
         const direccion = document.getElementById("txtdireccion").value;
         const telefono = document.getElementById("txttelefono").value;
         const que_vende = document.getElementById("txtque_vende").value;
+
+        let proveedorGuardar = {
+            ruc: ruc,
+            razon_social: razon_social,
+            direccion: direccion,
+            telefono: telefono,
+            que_vende: que_vende,
+        };
+
         try {
             if (id === "new") {
-                verbo = "post";
-                proveedorGuardar = {
-                    ruc: ruc,
-                    razon_social: razon_social,
-                    direccion: direccion,
-                    telefono: telefono,
-                    que_vende: que_vende,
-                };
-                const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, verbo, proveedorGuardar);
-                if (!result.error) {
-                    alert("Registro guardado con éxito.");
-                    navigate("/main-page/master/proveedores/");
-                } else {
-                    document.getElementById("txtMensajeError").classList.remove("d-none");
-                    ocultaMensaje();
-                }
+                verbo = "POST";
             } else {
-                verbo = "put";
+                verbo = "PUT";
                 proveedorGuardar = {
                     id_proveedor: id,
-                    ruc: ruc,
-                    razon_social: razon_social,
-                    direccion: direccion,
-                    telefono: telefono,
-                    que_vende: que_vende,
+                    ...proveedorGuardar,
                 };
-                const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, verbo, proveedorGuardar);
-                if (!result.error) {
-                    alert("Registro guardado con éxito.");
-                } else {
-                    document.getElementById("txtMensajeError").classList.remove("d-none");
-                    ocultaMensaje();
-                }
+            }
+            const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, verbo, proveedorGuardar);
+            if (!result.error) {
+                alert("Registro guardado con éxito.");
+            } else {
+                document.getElementById("txtMensajeError").classList.remove("d-none");
+                ocultaMensaje();
             }
         } catch (error) {
             console.error("Error al eliminar", error);
@@ -68,7 +57,7 @@ const ProveedoresMant = () => {
         if (confirmacion) {
             try {
                 const data = { id_proveedor: id };
-                await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, "delete", data);
+                await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, "DELETE", data);
                 return true;
             } catch (error) {
                 console.error("Error al eliminar", error);
@@ -84,7 +73,7 @@ const ProveedoresMant = () => {
             if (id === "new") {
                 setProveedor([""]);
             } else {
-                const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES + id, "get");
+                const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES + id, "GET");
                 setProveedor(result);
             }
         } catch (error) {
