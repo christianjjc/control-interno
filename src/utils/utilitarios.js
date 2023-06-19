@@ -22,6 +22,24 @@ class UtilidadesCj {
 
     //static comodin = encodeURIComponent("%");
     static comodin = "%";
+
+    static etiquetasPaginacion = (cantPaginas) => {
+        let array = [];
+        for (let i = 0; i < cantPaginas; i++) {
+            array.push({ num: i });
+        }
+        return array;
+    };
+
+    static arrayPaginado = (array, pagina, cantMax) => {
+        if (pagina < 1) {
+            pagina = 1;
+        }
+        const inicio = (pagina - 1) * cantMax;
+        const fin = pagina * cantMax;
+        const arrayXpagina = array.slice(inicio, fin);
+        return arrayXpagina;
+    };
 }
 
 export default UtilidadesCj;
