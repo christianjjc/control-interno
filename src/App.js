@@ -10,26 +10,29 @@ import Forbbiden from "./components/Forbbiden/Forbbiden";
 import Master from "./components/Master/Master";
 import ProveedoresList from "./components/Proveedores/ProveedoresList";
 import ProveedoresMant from "./components/Proveedores/ProveedoresMant";
+import Spinner from "./components/Spinner/Spinner";
 
 const App = () => {
     return (
         <>
-            <Container>
-                <Header>Header</Header>
-                <Main>
-                    <SectionOne>
-                        <Routes>
-                            <Route path="/" element={<Login />} />
-                            <Route path="/main-page" element={<MainPage />} />
-                            <Route path="/forbbiden" element={<Forbbiden />} />
-                            <Route path="/main-page/master" element={<MainPage children={<Master />} />} />
-                            <Route path="/main-page/master/proveedores/" element={<MainPage children={<ProveedoresList />} />} />
-                            <Route path="/main-page/master/proveedores/:id" element={<MainPage children={<ProveedoresMant />} />} />
-                        </Routes>
-                    </SectionOne>
-                </Main>
-                <Footer>Footer</Footer>
-            </Container>
+            <Spinner>
+                <Container>
+                    <Header>Header</Header>
+                    <Main>
+                        <SectionOne>
+                            <Routes>
+                                <Route path="/" element={<Login />} />
+                                <Route path="/main-page" element={<MainPage />} />
+                                <Route path="/forbbiden" element={<Forbbiden />} />
+                                <Route path="/main-page/master" element={<MainPage children={<Master />} />} />
+                                <Route path="/main-page/master/proveedores/" element={<MainPage children={<ProveedoresList />} />} />
+                                <Route path="/main-page/master/proveedores/:id" element={<MainPage children={<ProveedoresMant />} />} />
+                            </Routes>
+                        </SectionOne>
+                    </Main>
+                    <Footer>Footer</Footer>
+                </Container>
+            </Spinner>
         </>
     );
 };

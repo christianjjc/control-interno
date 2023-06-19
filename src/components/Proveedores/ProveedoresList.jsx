@@ -3,11 +3,11 @@ import UtilidadesCj from "../../utils/utilitarios";
 import imgTrash from "./trash3.svg";
 import imgModify from "./modify-ico.png";
 import { Link } from "react-router-dom";
-import "./ProveedoresList.css";
+import "./Proveedores.css";
 
 const ProveedoresList = () => {
     const URL_API_PROVEEDORES = "http://localhost:8080/proveedores/";
-    const LISTA_MAX_REGS = 10;
+    const LISTA_MAX_REGS = 15;
     const [listaProveedores, setListaProveedores] = useState([]);
     const [provEliminado, setprovEliminado] = useState([]);
     const [paginas, setPaginas] = useState([]);
@@ -26,12 +26,15 @@ const ProveedoresList = () => {
         const confirmacion = window.confirm(`¿Estás seguro de que deseas eliminar al proveedor ${rs}?`);
         if (confirmacion) {
             try {
+                UtilidadesCj.spinnerTF(true);
                 const data = { id_proveedor: id };
                 const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, "delete", data);
                 setprovEliminado(result);
                 alert("Proveedor eliminado satisfactoriamente.");
+                UtilidadesCj.spinnerTF(false);
                 return true;
             } catch (error) {
+                UtilidadesCj.spinnerTF(false);
                 console.error("Error al eliminar", error);
             }
         } else {
@@ -41,12 +44,15 @@ const ProveedoresList = () => {
 
     const getProveedores = async (valor) => {
         try {
+            UtilidadesCj.spinnerTF(true);
             const arrayTotal = await UtilidadesCj.obtenerDatosAxios("http://localhost:8080/proveedores/all/", "POST", { valor: valor });
             const cantidadBotones = UtilidadesCj.etiquetasPaginacion(Math.ceil(arrayTotal.length / LISTA_MAX_REGS));
             setPaginas(cantidadBotones);
             const proveedores = await UtilidadesCj.arrayPaginado(arrayTotal, paginaActual, LISTA_MAX_REGS);
             setListaProveedores(proveedores);
+            UtilidadesCj.spinnerTF(false);
         } catch (error) {
+            UtilidadesCj.spinnerTF(false);
             console.error(error);
         }
     };
@@ -71,10 +77,10 @@ const ProveedoresList = () => {
 
     return (
         <>
-            <section id="listaProveedores">
+            <section id="listaProveedores" className="contenedor-seccion">
                 <div className="row my-3">
-                    <div className="col">
-                        <h2>Listado de Proveedores</h2>
+                    <div className="col text-center">
+                        <h1>Listado de Proveedores</h1>
                     </div>
                 </div>
                 <div className="row my-3">
@@ -161,9 +167,12 @@ const ProveedoresList = () => {
                                     {/* <span className="sr-only">Previous</span> */}
                                 </Link>
                             </li>
+
                             {paginas.map((item, index) => (
                                 <li key={`pag-${item.num}`} className="page-item">
-                                    <Link className="page-link" onClick={() => handleCurrentPage(index + 1)}>
+                                    <Link
+                                        className={`page-link ${paginaActual == index + 1 ? "active" : ""}`}
+                                        onClick={() => handleCurrentPage(index + 1)}>
                                         {index + 1}
                                     </Link>
                                 </li>
