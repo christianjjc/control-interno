@@ -39,7 +39,11 @@ const ProveedoresMant = () => {
             const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, verbo, proveedorGuardar);
             if (!result.error) {
                 alert("Registro guardado con éxito.");
+                if (id === "new") {
+                    navigate(`/main-page/master/proveedores/${result?.id_proveedor}`);
+                }
             } else {
+                //console.error(result);
                 document.getElementById("txtMensajeError").classList.remove("d-none");
                 ocultaMensaje();
             }
