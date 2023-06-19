@@ -3,12 +3,15 @@ import UtilidadesCj from "../../utils/utilitarios";
 import imgTrash from "./trash3.svg";
 import imgModify from "./modify-ico.png";
 import { Link } from "react-router-dom";
-import "./ProveedoresList.css";
+import "./Proveedores.css";
 
 const ProveedoresList = () => {
     const URL_API_PROVEEDORES = "http://localhost:8080/proveedores/";
+    const LISTA_MAX_REGS = 15;
     const [listaProveedores, setListaProveedores] = useState([]);
     const [provEliminado, setprovEliminado] = useState([]);
+    const [paginas, setPaginas] = useState([]);
+    const [paginaActual, setPaginaActual] = useState(1);
 
     const handleBuscaProveedor = () => {
         const valorBuscado = document.getElementById("txtbuscarproveedor").value;
@@ -23,12 +26,15 @@ const ProveedoresList = () => {
         const confirmacion = window.confirm(`¿Estás seguro de que deseas eliminar al proveedor ${rs}?`);
         if (confirmacion) {
             try {
+                UtilidadesCj.spinnerTF(true);
                 const data = { id_proveedor: id };
                 const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, "delete", data);
                 setprovEliminado(result);
                 alert("Proveedor eliminado satisfactoriamente.");
+                UtilidadesCj.spinnerTF(false);
                 return true;
             } catch (error) {
+                UtilidadesCj.spinnerTF(false);
                 console.error("Error al eliminar", error);
             }
         } else {
@@ -38,25 +44,43 @@ const ProveedoresList = () => {
 
     const getProveedores = async (valor) => {
         try {
-            const proveedores = await UtilidadesCj.obtenerDatosAxios("http://localhost:8080/proveedores/all/", "POST", {
-                valor: valor,
-            });
+            UtilidadesCj.spinnerTF(true);
+            const arrayTotal = await UtilidadesCj.obtenerDatosAxios("http://localhost:8080/proveedores/all/", "POST", { valor: valor });
+            const cantidadBotones = UtilidadesCj.etiquetasPaginacion(Math.ceil(arrayTotal.length / LISTA_MAX_REGS));
+            setPaginas(cantidadBotones);
+            const proveedores = await UtilidadesCj.arrayPaginado(arrayTotal, paginaActual, LISTA_MAX_REGS);
             setListaProveedores(proveedores);
+            UtilidadesCj.spinnerTF(false);
         } catch (error) {
+            UtilidadesCj.spinnerTF(false);
             console.error(error);
+        }
+    };
+
+    const handleCurrentPage = (num, add = 0) => {
+        switch (add) {
+            case -1:
+                paginaActual > 1 && setPaginaActual(paginaActual - 1);
+                break;
+            case 1:
+                paginaActual < paginas.length && setPaginaActual(paginaActual + 1);
+                break;
+            default:
+                setPaginaActual(num);
+                break;
         }
     };
 
     useEffect(() => {
         handleBuscaProveedor();
-    }, [provEliminado]);
+    }, [provEliminado, paginaActual]);
 
     return (
         <>
-            <section id="listaProveedores">
+            <section id="listaProveedores" className="contenedor-seccion">
                 <div className="row my-3">
-                    <div className="col">
-                        <h2>Listado de Proveedores</h2>
+                    <div className="col text-center">
+                        <h1>Listado de Proveedores</h1>
                     </div>
                 </div>
                 <div className="row my-3">
@@ -103,7 +127,7 @@ const ProveedoresList = () => {
                             <tbody>
                                 {listaProveedores.map((item, index) => (
                                     <tr key={item?.id_proveedor} id={item?.id_proveedor}>
-                                        <th scope="row">{index + 1}</th>
+                                        <th scope="row">{index + 1 + (paginaActual - 1) * LISTA_MAX_REGS}</th>
                                         <td>{item?.ruc}</td>
                                         <td>{item?.razon_social}</td>
                                         <td>{item?.direccion}</td>
@@ -133,6 +157,34 @@ const ProveedoresList = () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div className="row my-3">
+                    <nav aria-label="paginacion">
+                        <ul className="pagination">
+                            <li className="page-item">
+                                <Link className="page-link" href="#" aria-label="Previous" onClick={() => handleCurrentPage(0, -1)}>
+                                    <span aria-hidden="true">&laquo;</span>
+                                    {/* <span className="sr-only">Previous</span> */}
+                                </Link>
+                            </li>
+
+                            {paginas.map((item, index) => (
+                                <li key={`pag-${item.num}`} className="page-item">
+                                    <Link
+                                        className={`page-link ${paginaActual == index + 1 ? "active" : ""}`}
+                                        onClick={() => handleCurrentPage(index + 1)}>
+                                        {index + 1}
+                                    </Link>
+                                </li>
+                            ))}
+                            <li className="page-item">
+                                <Link className="page-link" href="#" aria-label="Next" onClick={() => handleCurrentPage(0, 1)}>
+                                    <span aria-hidden="true">&raquo;</span>
+                                    {/* <span className="sr-only">Next</span> */}
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </section>
         </>

@@ -13,7 +13,7 @@ const Login = () => {
                 nombre_usuario: document.getElementById("txtUserName").value,
                 pass_usuario: document.getElementById("txtPassword").value,
             };
-
+            UtilidadesCj.spinnerTF(true);
             const result = await UtilidadesCj.obtenerDatosAxios("http://localhost:8080/", "post", data);
             if (result.length > 0) {
                 usrCtx.setUsuario(result);
@@ -21,7 +21,9 @@ const Login = () => {
                 document.getElementById("txtMensajeError").classList.remove("d-none");
                 ocultaMensaje();
             }
+            UtilidadesCj.spinnerTF(false);
         } catch (error) {
+            UtilidadesCj.spinnerTF(false);
             throw new Error("Error:" + error);
         }
     };

@@ -34,7 +34,7 @@ const MainPage = ({ children }) => {
                         <div className="col-3">{`Bienvenido(a): ${usuario ? usuario.nombre_usuario : "anonimo"} `}</div>
                         <div className="col-9">{`Rol: ${usuario ? usuario.nombre_rol : "anonimo"}`} </div>
                     </div>
-                    <div className="row bg-info h-100">
+                    <div className="row h-100">
                         <div className="col">{children}</div>
                     </div>
                 </div>
