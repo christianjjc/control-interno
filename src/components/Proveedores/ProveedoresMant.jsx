@@ -39,7 +39,11 @@ const ProveedoresMant = () => {
             const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, verbo, proveedorGuardar);
             if (!result.error) {
                 alert("Registro guardado con éxito.");
+                if (id === "new") {
+                    navigate(`/main-page/master/proveedores/${result?.id_proveedor}`);
+                }
             } else {
+                //console.error(result);
                 document.getElementById("txtMensajeError").classList.remove("d-none");
                 ocultaMensaje();
             }
@@ -102,15 +106,15 @@ const ProveedoresMant = () => {
 
     return (
         <section id="mantProveedores" className="bg-light contenedor-seccion">
-            <div className="row my-3">
+            <header className="row my-3">
                 <div className="col text-center">
                     <h1>Mtto. de Proveedores</h1>
                 </div>
-            </div>
+            </header>
 
             {proveedor.map((item, index) => (
-                <>
-                    <div key={`prov-mant-${item?.id_proveedor}-${index}`} className="row my-3 px-4">
+                <section key={`prov-mant-${item?.id_proveedor}-${index}`}>
+                    <div className="row my-3 px-4">
                         <div className="col">
                             <div className="row d-flex flex-sm-wrap my-3">
                                 <div className="col-12 col-md-4 fw-bold">
@@ -225,7 +229,7 @@ const ProveedoresMant = () => {
                             Ups! Hubo un problema al registrarlos datos, por favor verifique que los campos contengan un valor correcto.
                         </div>
                     </div>
-                </>
+                </section>
             ))}
         </section>
     );
