@@ -15,30 +15,27 @@ const MainPage = ({ children }) => {
     return (
         <>
             <div className="row">
-                <div className="col-2">
-                    <div className="row">
-                        <div className="col">
-                            <div className="row">
-                                <div className="col">Menú</div>
-                            </div>
-                            <div className="row bg-secondary h-100">
-                                <div className="col">
-                                    <VMainMenu />
-                                </div>
-                            </div>
+                <div className="col-12">
+                    <div className="row my-3">
+                        <div className="col-3">
+                            <button
+                                className="btn btn-primary"
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasMainMenu"
+                                aria-controls="offcanvasMainMenu">
+                                Menú Principal
+                            </button>
                         </div>
-                    </div>
-                </div>
-                <div className="col-10">
-                    <div className="row">
-                        <div className="col-3">{`Bienvenido(a): ${usuario ? usuario.nombre_usuario : "anonimo"} `}</div>
-                        <div className="col-9">{`Rol: ${usuario ? usuario.nombre_rol : "anonimo"}`} </div>
+                        <div className="col-6">{`Bienvenido(a): ${usuario ? usuario.nombre_usuario : "anonimo"} `}</div>
+                        <div className="col-3">{`Rol: ${usuario ? usuario.nombre_rol : "anonimo"}`} </div>
                     </div>
                     <div className="row h-100 bg-white">
                         <div className="col">{children}</div>
                     </div>
                 </div>
             </div>
+            <VMainMenu />
         </>
     );
 };
