@@ -35,6 +35,7 @@ const ProveedoresMant = () => {
                     ...proveedorGuardar,
                 };
             }
+            UtilidadesCj.spinnerTF(true);
             const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, verbo, proveedorGuardar);
             if (!result.error) {
                 alert("Registro guardado con éxito.");
@@ -42,7 +43,9 @@ const ProveedoresMant = () => {
                 document.getElementById("txtMensajeError").classList.remove("d-none");
                 ocultaMensaje();
             }
+            UtilidadesCj.spinnerTF(false);
         } catch (error) {
+            UtilidadesCj.spinnerTF(false);
             console.error("Error al eliminar", error);
         }
     };
@@ -56,10 +59,13 @@ const ProveedoresMant = () => {
         const confirmacion = window.confirm(`¿Estás seguro de que deseas eliminar al proveedor ${rs}?`);
         if (confirmacion) {
             try {
+                UtilidadesCj.spinnerTF(true);
                 const data = { id_proveedor: id };
                 await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, "DELETE", data);
+                UtilidadesCj.spinnerTF(false);
                 return true;
             } catch (error) {
+                UtilidadesCj.spinnerTF(false);
                 console.error("Error al eliminar", error);
                 return false;
             }
@@ -70,13 +76,16 @@ const ProveedoresMant = () => {
 
     const getProveedor = async (id) => {
         try {
+            UtilidadesCj.spinnerTF(true);
             if (id === "new") {
                 setProveedor([""]);
             } else {
                 const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES + id, "GET");
                 setProveedor(result);
             }
+            UtilidadesCj.spinnerTF(false);
         } catch (error) {
+            UtilidadesCj.spinnerTF(false);
             console.error(error);
         }
     };
@@ -92,16 +101,16 @@ const ProveedoresMant = () => {
     }, []);
 
     return (
-        <section id="mantProveedores" className="bg-light">
-            <div className="row">
-                <div className="col">
-                    <h2>Maestro de Proveedores</h2>
+        <section id="mantProveedores" className="bg-light contenedor-seccion">
+            <div className="row my-3">
+                <div className="col text-center">
+                    <h1>Mtto. de Proveedores</h1>
                 </div>
             </div>
 
             {proveedor.map((item, index) => (
-                <div key={`prov-mant-${item?.id_proveedor}-${index}`}>
-                    <div className="row px-4">
+                <>
+                    <div key={`prov-mant-${item?.id_proveedor}-${index}`} className="row my-3 px-4">
                         <div className="col">
                             <div className="row d-flex flex-sm-wrap my-3">
                                 <div className="col-12 col-md-4 fw-bold">
@@ -191,7 +200,7 @@ const ProveedoresMant = () => {
                         </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row my-3">
                         <div className="col-12 d-flex flex-wrap justify-content-center">
                             <Link className="btn btn-secondary me-1 mb-2" onClick={handleSaveProveedor}>
                                 Guardar
@@ -216,7 +225,7 @@ const ProveedoresMant = () => {
                             Ups! Hubo un problema al registrarlos datos, por favor verifique que los campos contengan un valor correcto.
                         </div>
                     </div>
-                </div>
+                </>
             ))}
         </section>
     );

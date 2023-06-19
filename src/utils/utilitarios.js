@@ -40,6 +40,18 @@ class UtilidadesCj {
         const arrayXpagina = array.slice(inicio, fin);
         return arrayXpagina;
     };
+
+    static spinnerTF = (trueFalse) => {
+        const spinner = document.querySelector(`#divSpinner`);
+        const overlay = document.querySelector(`#divOverlay`);
+        if (trueFalse) {
+            spinner.style.display = "block";
+            overlay.style.display = "block";
+        } else {
+            spinner.style.display = "none";
+            overlay.style.display = "none";
+        }
+    };
 }
 
 export default UtilidadesCj;
