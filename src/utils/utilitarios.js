@@ -20,6 +20,10 @@ class UtilidadesCj {
     }
   };
 
+  static primeraLetaMayus = (texto) => {
+    return texto.charAt(0).toUpperCase() + texto.slice(1);
+  };
+
   static etiquetasPaginacion = (cantPaginas) => {
     let array = [];
     for (let i = 0; i < cantPaginas; i++) {

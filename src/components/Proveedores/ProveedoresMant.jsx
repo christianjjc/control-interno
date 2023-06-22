@@ -4,27 +4,23 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import imgTrash from "../../icons/trash3.svg";
 
 const ProveedoresMant = () => {
-  const URL_API_PROVEEDORES = "http://localhost:8080/proveedores/";
-  const [proveedor, setProveedor] = useState([]);
+  const modelo = "proveedores";
+  const URL_API = `http://localhost:8080/${modelo}/`;
+  const [registro, setRegistro] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const fnSetProveedor = (valor) => setProveedor(valor);
+  const fnSetRegistro = (valor) => setRegistro(valor);
 
-  const handleSaveProveedor = async () => {
+  const handleSaveRegistro = async () => {
     let verbo = "";
-    const ruc = document.getElementById("txtruc").value;
-    const razon_social = document.getElementById("txtrazonsocial").value;
-    const direccion = document.getElementById("txtdireccion").value;
-    const telefono = document.getElementById("txttelefono").value;
-    const que_vende = document.getElementById("txtque_vende").value;
 
-    let proveedorGuardar = {
-      ruc: ruc,
-      razon_social: razon_social,
-      direccion: direccion,
-      telefono: telefono,
-      que_vende: que_vende,
+    let registroGuardar = {
+      ruc: document.getElementById("txtruc").value,
+      razon_social: document.getElementById("txtrazonsocial").value,
+      direccion: document.getElementById("txtdireccion").value,
+      telefono: document.getElementById("txttelefono").value,
+      que_vende: document.getElementById("txtque_vende").value,
     };
 
     try {
@@ -32,17 +28,17 @@ const ProveedoresMant = () => {
         verbo = "POST";
       } else {
         verbo = "PUT";
-        proveedorGuardar = {
+        registroGuardar = {
           id_proveedor: id,
-          ...proveedorGuardar,
+          ...registroGuardar,
         };
       }
       UtilidadesCj.spinnerTF(true);
-      const result = await UtilidadesCj.obtenerDatosAxios(URL_API_PROVEEDORES, verbo, proveedorGuardar);
+      const result = await UtilidadesCj.obtenerDatosAxios(URL_API, verbo, registroGuardar);
       if (!result.error) {
         alert("Registro guardado con éxito.");
         if (id === "new") {
-          navigate(`/main-page/master/proveedores/${result?.id_proveedor}`);
+          navigate(`/main-page/master/${modelo}/${result?.id_proveedor}`);
         }
       } else {
         document.getElementById("txtMensajeError").classList.remove("d-none");
@@ -55,27 +51,27 @@ const ProveedoresMant = () => {
     }
   };
 
-  const handleEliminarProveedor = async (id, rs) => {
+  const handleEliminar = async (id, nombre) => {
     if (id != "new") {
-      const eliminado = await UtilidadesCj.fnEliminaItem(id, rs, URL_API_PROVEEDORES, () => {});
-      eliminado && navigate("/main-page/master/proveedores/");
+      const eliminado = await UtilidadesCj.fnEliminaItem(id, nombre, URL_API, () => {});
+      eliminado && navigate(`/main-page/master/${modelo}/`);
     }
   };
 
   useEffect(() => {
-    UtilidadesCj.getDataOne(URL_API_PROVEEDORES, id, fnSetProveedor);
+    UtilidadesCj.getDataOne(URL_API, id, fnSetRegistro);
   }, []);
 
   return (
-    <section id="mantProveedores" className="bg-light contenedor-seccion">
+    <section id="mantRegistro" className="bg-light contenedor-seccion">
       <header className="row my-3">
         <div className="col text-center">
-          <h1>Mtto. de Proveedores</h1>
+          <h1>{`Mtto. de ${UtilidadesCj.primeraLetaMayus(modelo)}`}</h1>
         </div>
       </header>
 
-      {proveedor.map((item, index) => (
-        <section key={`prov-mant-${item?.id_proveedor}-${index}`}>
+      {registro.map((item, index) => (
+        <section key={`reg-mant-${item?.id_proveedor}-${index}`}>
           <div className="row my-3 px-4">
             <div className="col">
               <div className="row d-flex flex-sm-wrap my-3">
@@ -161,20 +157,20 @@ const ProveedoresMant = () => {
 
           <div className="row my-3">
             <div className="col-12 d-flex flex-wrap justify-content-center">
-              <Link className="btn btn-secondary me-1 mb-2" onClick={handleSaveProveedor}>
+              <Link className="btn btn-secondary me-1 mb-2" onClick={handleSaveRegistro}>
                 Guardar
               </Link>
               <Link
                 id={`dp-${item?.id_proveedor}`}
                 className="btn btn-danger mx-1 mb-2"
                 onClick={() => {
-                  handleEliminarProveedor(`${item?.id_proveedor}`, `${item?.razon_social}`);
+                  handleEliminar(`${item?.id_proveedor}`, `${item?.razon_social}`);
                 }}>
                 Eliminar
                 <img src={imgTrash} className="img-mant ms-2" alt="Eliminar Proveedor" />
               </Link>
               <Link className="btn btn-secondary mx-1 mb-2">Imprimir</Link>
-              <Link className="btn btn-warning ms-1 mb-2" to="/main-page/master/proveedores">
+              <Link className="btn btn-warning ms-1 mb-2" to={`/main-page/master/${modelo}`}>
                 Volver
               </Link>
             </div>

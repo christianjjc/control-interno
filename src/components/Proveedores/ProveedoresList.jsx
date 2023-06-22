@@ -6,24 +6,25 @@ import { Link } from "react-router-dom";
 import "./Proveedores.css";
 
 const ProveedoresList = () => {
-  const URL_API_PROVEEDORES = "http://localhost:8080/proveedores/";
+  const modelo = "proveedores";
+  const URL_API = `http://localhost:8080/${modelo}/`;
   const LISTA_MAX_REGS = 20;
-  const [listaProveedores, setListaProveedores] = useState([]);
-  const [provEliminado, setprovEliminado] = useState([]);
+  const [lista, setLista] = useState([]);
+  const [eliminado, setEliminado] = useState([]);
   const [paginas, setPaginas] = useState([]);
   const [paginaActual, setPaginaActual] = useState(1);
 
-  const fnSetEliminado = (valor) => setprovEliminado(valor);
+  const fnSetEliminado = (valor) => setEliminado(valor);
   const fnSetPaginas = (valor) => setPaginas(valor);
-  const fnSetListaProveedores = (valor) => setListaProveedores(valor);
+  const fnSetLista = (valor) => setLista(valor);
 
-  const handleBuscaProveedor = () => {
-    const valorBuscado = document.getElementById("txtbuscarproveedor").value;
-    UtilidadesCj.getDataAll(valorBuscado, URL_API_PROVEEDORES, LISTA_MAX_REGS, paginaActual, fnSetPaginas, fnSetListaProveedores);
+  const handleBuscar = () => {
+    const valorBuscado = document.getElementById("txtbuscar").value;
+    UtilidadesCj.getDataAll(valorBuscado, URL_API, LISTA_MAX_REGS, paginaActual, fnSetPaginas, fnSetLista);
   };
 
-  const handleEliminarProveedor = (id, rs, event) => {
-    !UtilidadesCj.fnEliminaItem(id, rs, URL_API_PROVEEDORES, fnSetEliminado) && event.preventDefault();
+  const handleEliminar = (id, nombre, event) => {
+    !UtilidadesCj.fnEliminaItem(id, nombre, URL_API, fnSetEliminado) && event.preventDefault();
   };
 
   const handleCurrentPage = (num, add = 0) => {
@@ -41,30 +42,30 @@ const ProveedoresList = () => {
   };
 
   useEffect(() => {
-    handleBuscaProveedor();
-  }, [provEliminado, paginaActual]);
+    handleBuscar();
+  }, [eliminado, paginaActual]);
 
   return (
     <>
-      <section id="listaProveedores" className="contenedor-seccion">
-        <header className="cabecera-form my-3">
+      <section id="lista" className="contenedor-seccion">
+        <header className="my-3">
           <div className="row">
             <div className="col text-center">
-              <h1>Listado de Proveedores</h1>
+              <h1>{`Listado de ${UtilidadesCj.primeraLetaMayus(modelo)}`}</h1>
             </div>
           </div>
           <div className="row my-3">
             <div className="col-12 col-lg-6 my-1">
               <div className="input-group">
                 <input
-                  id="txtbuscarproveedor"
+                  id="txtbuscar"
                   type="text"
                   className="form-control my-1"
                   placeholder="Ingrese Razón Social o RUC"
                   aria-label="Recipient's username"
-                  aria-describedby="btnbuscarproveedor"
+                  aria-describedby="btnbuscar"
                 />
-                <button className="btn btn-primary my-1" type="button" id="btnbuscarproveedor" onClick={handleBuscaProveedor}>
+                <button className="btn btn-primary my-1" type="button" id="btnbuscar" onClick={handleBuscar}>
                   Buscar
                 </button>
               </div>
@@ -72,7 +73,7 @@ const ProveedoresList = () => {
             <div className="col-12 col-lg-6 my-1">
               <div className="row d-flex justify-content-center">
                 <div className="col-12 col-lg-4 my-1">
-                  <Link className="btn btn-secondary w-100" to={`/main-page/master/proveedores/new`}>
+                  <Link className="btn btn-secondary w-100" to={`/main-page/master/${modelo}/new`}>
                     Nuevo
                   </Link>
                 </div>
@@ -88,7 +89,7 @@ const ProveedoresList = () => {
             </div>
           </div>
         </header>
-        <section className="body-form my-3">
+        <section className="my-3">
           <div className="row">
             <div className="col-12">
               <div className="row border-bottom py-3 my-1">
@@ -102,7 +103,7 @@ const ProveedoresList = () => {
               </div>
               <div className="row">
                 <div className="col-12">
-                  {listaProveedores.map((item, index) => (
+                  {lista.map((item, index) => (
                     <div className="fila_listado row" key={item?.id_proveedor} id={item?.id_proveedor}>
                       <div className="col-1 fw-bold  text-center">{index + 1 + (paginaActual - 1) * LISTA_MAX_REGS}</div>
                       <div className="col-11 col-xl-2">{item?.ruc}</div>
@@ -114,20 +115,20 @@ const ProveedoresList = () => {
                           <div className="col-4 col-sm-2 col-xl-6 text-end">
                             <Link
                               id={`btnmp-${item?.id_proveedor}`}
-                              to={`/main-page/master/proveedores/${item?.id_proveedor}`}
+                              to={`/main-page/master/${modelo}/${item?.id_proveedor}`}
                               className="btn btn-outline-warning">
-                              <img src={imgModify} className="img-mant" alt="Modificar Proveedor" />
+                              <img src={imgModify} className="img-mant" alt="Modificar" />
                             </Link>
                           </div>
                           <div className="col-4 col-sm-2 col-xl-6 text-end">
                             <Link
                               id={`dp-${item?.id_proveedor}`}
-                              to="/main-page/master/proveedores"
+                              to={`/main-page/master/${modelo}`}
                               className="btn btn-outline-danger"
                               onClick={() => {
-                                handleEliminarProveedor(`${item?.id_proveedor}`, `${item?.razon_social}`);
+                                handleEliminar(`${item?.id_proveedor}`, `${item?.razon_social}`);
                               }}>
-                              <img src={imgTrash} className="img-mant" alt="Eliminar Proveedor" />
+                              <img src={imgTrash} className="img-mant" alt="Eliminar" />
                             </Link>
                           </div>
                         </div>

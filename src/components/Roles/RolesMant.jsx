@@ -4,23 +4,21 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import imgTrash from "../../icons/trash3.svg";
 
 const RolesMant = () => {
-  const URL_API_ROLES = "http://localhost:8080/roles/";
-  const [rol, setRol] = useState([]);
+  const modelo = "roles";
+  const URL_API = `http://localhost:8080/${modelo}/`;
+  const [registro, setRegistro] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const fnSetRol = (valor) => setRol(valor);
+  const fnSetRegistro = (valor) => setRegistro(valor);
 
-  const handleSaveRol = async () => {
+  const handleSaveRegistro = async () => {
     let verbo = "";
-    const nombre_rol = document.getElementById("txtnombrerol").value;
-    const desc_rol = document.getElementById("txtdescrol").value;
-    const level = document.getElementById("txtlevel").value;
 
     let rolGuardar = {
-      nombre_rol: nombre_rol,
-      desc_rol: desc_rol,
-      level: level,
+      nombre_rol: document.getElementById("txtnombrerol").value,
+      desc_rol: document.getElementById("txtdescrol").value,
+      level: document.getElementById("txtlevel").value,
     };
 
     try {
@@ -34,11 +32,11 @@ const RolesMant = () => {
         };
       }
       UtilidadesCj.spinnerTF(true);
-      const result = await UtilidadesCj.obtenerDatosAxios(URL_API_ROLES, verbo, rolGuardar);
+      const result = await UtilidadesCj.obtenerDatosAxios(URL_API, verbo, rolGuardar);
       if (!result.error) {
         alert("Registro guardado con éxito.");
         if (id === "new") {
-          navigate(`/main-page/master/roles/${result?.id_rol}`);
+          navigate(`/main-page/master/${modelo}/${result?.id_rol}`);
         }
       } else {
         document.getElementById("txtMensajeError").classList.remove("d-none");
@@ -51,27 +49,27 @@ const RolesMant = () => {
     }
   };
 
-  const handleEliminarRol = async (id, nombre) => {
+  const handleEliminar = async (id, nombre) => {
     if (id != "new") {
-      const eliminado = await UtilidadesCj.fnEliminaItem(id, nombre, URL_API_ROLES, () => {});
-      eliminado && navigate("/main-page/master/roles/");
+      const eliminado = await UtilidadesCj.fnEliminaItem(id, nombre, URL_API, () => {});
+      eliminado && navigate(`/main-page/master/${modelo}/`);
     }
   };
 
   useEffect(() => {
-    UtilidadesCj.getDataOne(URL_API_ROLES, id, fnSetRol);
+    UtilidadesCj.getDataOne(URL_API, id, fnSetRegistro);
   }, []);
 
   return (
-    <section id="mantRoles" className="bg-light contenedor-seccion">
+    <section id="mantRegistro" className="bg-light contenedor-seccion">
       <header className="row my-3">
         <div className="col text-center">
-          <h1>Mtto. de Roles</h1>
+          <h1>{`Mtto. de ${UtilidadesCj.primeraLetaMayus(modelo)}`}</h1>
         </div>
       </header>
 
-      {rol.map((item, index) => (
-        <section key={`rol-mant-${item?.id_rol}-${index}`}>
+      {registro.map((item, index) => (
+        <section key={`registro-mant-${item?.id_rol}-${index}`}>
           <div className="row my-3 px-4">
             <div className="col">
               <div className="row d-flex flex-sm-wrap my-3">
@@ -130,20 +128,20 @@ const RolesMant = () => {
 
           <div className="row my-3">
             <div className="col-12 d-flex flex-wrap justify-content-center">
-              <Link className="btn btn-secondary me-1 mb-2" onClick={handleSaveRol}>
+              <Link className="btn btn-secondary me-1 mb-2" onClick={handleSaveRegistro}>
                 Guardar
               </Link>
               <Link
                 id={`dp-${item?.id_rol}`}
                 className="btn btn-danger mx-1 mb-2"
                 onClick={() => {
-                  handleEliminarRol(`${item?.id_rol}`, `${item?.nombre_rol}`);
+                  handleEliminar(`${item?.id_rol}`, `${item?.nombre_rol}`);
                 }}>
                 Eliminar
-                <img src={imgTrash} className="img-mant ms-2" alt="Eliminar Rol" />
+                <img src={imgTrash} className="img-mant ms-2" alt="Eliminar" />
               </Link>
               <Link className="btn btn-secondary mx-1 mb-2">Imprimir</Link>
-              <Link className="btn btn-warning ms-1 mb-2" to="/main-page/master/roles">
+              <Link className="btn btn-warning ms-1 mb-2" to={`/main-page/master/${modelo}`}>
                 Volver
               </Link>
             </div>
