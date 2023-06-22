@@ -13,6 +13,8 @@ import ProveedoresMant from "./components/Proveedores/ProveedoresMant";
 import Spinner from "./components/Spinner/Spinner";
 import RolesList from "./components/Roles/RolesList";
 import RolesMant from "./components/Roles/RolesMant";
+import UsuariosList from "./components/Usuarios/UsuariosList";
+import UsuariosMant from "./components/Usuarios/UsuariosMant";
 
 const App = () => {
   return (
@@ -31,6 +33,8 @@ const App = () => {
                 <Route path="/main-page/master/proveedores/:id" element={<MainPage children={<ProveedoresMant />} />} />
                 <Route path="/main-page/master/roles/" element={<MainPage children={<RolesList />} />} />
                 <Route path="/main-page/master/roles/:id" element={<MainPage children={<RolesMant />} />} />
+                <Route path="/main-page/master/usuarios/" element={<MainPage children={<UsuariosList />} />} />
+                <Route path="/main-page/master/usuarios/:id" element={<MainPage children={<UsuariosMant />} />} />
               </Routes>
             </SectionOne>
           </Main>
