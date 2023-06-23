@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import UtilidadesCj from "../../utils/utilitarios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import imgTrash from "../../icons/trash3.svg";
+import Combo from "../Combo/Combo";
 
 const UsuariosMant = () => {
   const modelo = "usuarios";
@@ -14,10 +15,11 @@ const UsuariosMant = () => {
 
   const handleSaveRegistro = async () => {
     let verbo = "";
+    const resultado = await UtilidadesCj.getDataenArray("http://localhost:8080/roles/all", document.getElementById("cmbrol").value, () => {});
     let registroGuardar = {
       nombre_usuario: document.getElementById("txtnombre").value,
       pass_usuario: document.getElementById("txtpassword").value,
-      id_rol: document.getElementById("txtrol").value,
+      id_rol: resultado[0].id_rol,
     };
     try {
       if (id === "new") {
@@ -43,7 +45,7 @@ const UsuariosMant = () => {
       UtilidadesCj.spinnerTF(false);
     } catch (error) {
       UtilidadesCj.spinnerTF(false);
-      console.error("Error al eliminar", error);
+      console.error("Error al guardar", error);
     }
   };
 
@@ -55,7 +57,9 @@ const UsuariosMant = () => {
   };
 
   useEffect(() => {
-    UtilidadesCj.getDataOne(URL_API, id, fnSetRegistro);
+    (async () => {
+      await UtilidadesCj.getDataOne(URL_API, id, fnSetRegistro);
+    })();
   }, []);
 
   return (
@@ -98,7 +102,7 @@ const UsuariosMant = () => {
                   <input
                     id="txtpassword"
                     className="form-control"
-                    type="password"
+                    type="text"
                     placeholder="Password"
                     aria-label="txtpassword"
                     defaultValue={item?.pass_usuario}
@@ -108,12 +112,12 @@ const UsuariosMant = () => {
 
               <div className="row d-flex flex-sm-wrap mb-3">
                 <div className="col-12 col-md-4 fw-bold">
-                  <label htmlFor="txtrol" className="form-label">
+                  <label htmlFor="cmbrol" className="form-label">
                     Rol:
                   </label>
                 </div>
                 <div className="col-12 col-md-8">
-                  <input id="txtrol" className="form-control" type="text" placeholder="Rol" aria-label="txtrol" defaultValue={item?.id_rol} />
+                  <Combo id_etiqueta="cmbrol" modelo="roles" nombre_actual={item?.nombre_rol} str_Prop_Id="id_rol" str_Prop_nombre="nombre_rol" />
                 </div>
               </div>
             </div>
