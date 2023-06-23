@@ -84,15 +84,28 @@ class UtilidadesCj {
     }
   };
 
-  static getDataAll = async (valor, url, maxRegs, paginaActual, fnSetPaginas, fnSetListaProveedores) => {
+  static getDataAll = async (valor, url, maxRegs, paginaActual, fnSetPaginas, fnSetLista) => {
     try {
       UtilidadesCj.spinnerTF(true);
       const arrayTotal = await UtilidadesCj.obtenerDatosAxios(url + "all/", "POST", { valor: valor });
       const cantidadBotones = UtilidadesCj.etiquetasPaginacion(Math.ceil(arrayTotal.length / maxRegs));
       fnSetPaginas(cantidadBotones);
-      const proveedores = await UtilidadesCj.arrayPaginado(arrayTotal, paginaActual, maxRegs);
-      fnSetListaProveedores(proveedores);
+      const result = await UtilidadesCj.arrayPaginado(arrayTotal, paginaActual, maxRegs);
+      fnSetLista(result);
       UtilidadesCj.spinnerTF(false);
+    } catch (error) {
+      UtilidadesCj.spinnerTF(false);
+      console.error(error);
+    }
+  };
+
+  static getDataenArray = async (url, valor = "", fn) => {
+    try {
+      UtilidadesCj.spinnerTF(true);
+      const result = await UtilidadesCj.obtenerDatosAxios(url, "POST", { valor: valor });
+      fn(result);
+      UtilidadesCj.spinnerTF(false);
+      return result;
     } catch (error) {
       UtilidadesCj.spinnerTF(false);
       console.error(error);
@@ -117,6 +130,16 @@ class UtilidadesCj {
     } else {
       return false;
     }
+  };
+
+  static cargaArrayEnCombo = (strIdCmb, miArray, propiedadID, propiedadNombre) => {
+    const cmb = document.querySelector(`#${strIdCmb}`);
+    let html = ``;
+    for (const eL of miArray) {
+      //html += `<option value="${eL.id}">${eL.nombre}</option>`;
+      html += `<option value="${eL[propiedadID]}">${eL[propiedadNombre]}</option>`;
+    }
+    cmb.innerHTML = html;
   };
 }
 

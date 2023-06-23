@@ -60,7 +60,11 @@ const VMainMenu = () => {
                       Proveedores
                     </Link>
                   </li>
-                  <li>Usuarios</li>
+                  <li>
+                    <Link className="VMenuLink" to={"/main-page/master/usuarios/"}>
+                      Usuarios
+                    </Link>
+                  </li>
                   <li>
                     <Link className="VMenuLink" to={"/main-page/master/roles/"}>
                       Roles
