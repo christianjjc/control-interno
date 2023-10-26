@@ -84,6 +84,20 @@ class UtilidadesCj {
     }
   };
 
+  /**
+   *
+   * GET-DATA-ALL
+   * Esta función devuelve un array o lista a partir de ingresar un texto.
+   * El texto se toma como parámetro para devolver los registros que lo contengan.
+   *
+   * @param {*} valor Es el valor que se está buscando o el texto ingresado.
+   * @param {*} url la URL a la que se hará el FETCH.
+   * @param {*} maxRegs la cantidad máxima de registros por página.
+   * @param {*} paginaActual Es la página que se va a mostrar al inicio. Se ha colocado 1, pero puede ser otra.
+   * @param {*} fnSetPaginas set de useState - setea en el componente la cantidad de páginas que se devolverán luego de calcularlas.
+   * @param {*} fnSetLista set de useState - setea en el componente la LISTA o ARRAY a devolver. Aquí es donde se llena el objeto LISTA.
+   *
+   */
   static getDataAll = async (valor, url, maxRegs, paginaActual, fnSetPaginas, fnSetLista) => {
     try {
       UtilidadesCj.spinnerTF(true);

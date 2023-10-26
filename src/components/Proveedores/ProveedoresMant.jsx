@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import UtilidadesCj from "../../utils/utilitarios";
+import UtilidadesCj from "../../utils/UtilidadesCj";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import imgTrash from "../../icons/trash3.svg";
 
